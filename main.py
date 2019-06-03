@@ -41,7 +41,7 @@ def checkPhrase(phrase):
 
 
 def delayEveryHour():
-    time.sleep(10)
+    time.sleep(3600)
 
 
 def pilihkata():
