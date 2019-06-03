@@ -4,18 +4,25 @@ import time
 
 
 phrasesArray = []
-CONSUMER_KEY = 0
-CONSUMER_SECRET = 0
-ACCESS_TOKEN = 0
-ACCESS_TOKEN_SECRET = 0
+phraseNumber = {}
+CONSUMER_KEY = "5ws7032LGLKO9mdnkluJeu5mh"
+CONSUMER_SECRET = "xppA3EA7BkdDQzM9JevjPnkLrsZAg1oHZOiI2cGuk7pJdMV1Zv"
+ACCESS_TOKEN = "1135194910162731008-4hIellt4Mrz3un6upab5nLv6H3zNrn"
+ACCESS_TOKEN_SECRET = "H0eey8L5Nawkq2LYwAByasiiQkEIf4im2zp7AJubwBvR4"
 
 
 def main():
     bot = authenticate()
     while True:
-        phrase = pilihkata()
-        bot.update_status(phrase.upper())
-        delayEveryHour()
+        try:
+            phrase = pilihkata()
+            numberOfExclamationmarks = checkPhrase(phrase)
+            bot.update_status(phrase.upper()+" "+numberOfExclamationmarks*"!")
+            print(phraseNumber)
+            print("SUDAH KE TWEET "+phrase)
+            delayEveryHour()
+        except tweepy.TweepError:
+            continue
 
 
 def authenticate():
@@ -25,8 +32,16 @@ def authenticate():
     return api
 
 
+def checkPhrase(phrase):
+    if phrase not in phraseNumber:
+        phraseNumber[phrase] = 0
+    else:
+        phraseNumber[phrase] += 1
+    return phraseNumber[phrase]
+
+
 def delayEveryHour():
-    time.sleep(5)
+    time.sleep(10)
 
 
 def pilihkata():
@@ -38,4 +53,4 @@ def pilihkata():
 
 
 if __name__ == "__main__":
-    print(pilihkata().upper())
+    main()
